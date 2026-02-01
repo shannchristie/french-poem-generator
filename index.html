@@ -1,124 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=>, initial-scale=1.0">
-    <title>French Poem Generator</title>
-</head>
-<style> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/typewriter-effect@2.18.0/dist/core.js"></script>
 
+  <title>AI French Poem Generator</title>
 
-body { 
-    background-color: #f9f7fe
-}
+  <style>
+    body { 
+      background-color: #f9f7fe;
+    }
 
-a { 
-    color: #885df1;
-}
-.container {
-    margin: 120px auto;
-    max-width: 600px;
-    font-family: Arial, Helvetica, sans-serif;
-}
+    a { 
+      color: #885df1;
+    }
 
-header {
-    margin-bottom: 30px;
-}
+    .container {
+      margin: 120px auto;
+      max-width: 600px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-h1 {
-    
-    text-align: center;
-    font-weight: 800;
-    font-size: 36px;
-    line-height: 1.5;
-    color: #272044
-}
-
-
-form {
-    padding: 30px; 
-    background-color: white;
-    box-shadow: 0px 20px 60px rgba(65, 50, 100, 0.08);
-    border-radius: 10px;
-    display: flex;
-    margin-bottom: 30px;
-
-}
-.instruction { 
-    padding: 16px; 
-    border: 1px solid rgba(39, 33, 66, 0.5); 
-    width: 80%; 
-    font-size: 16px;
-    border-radius:50px; 
-    line-height: 20px; 
-    color: #272044
-}
-
-.submit-button { 
-margin-left: 10px; 
-background-color: #885df1;
-color: white;
-border: none; 
-width: 150px;
-font-size: 16px;
-border-radius: 50px; 
-padding: 14px 24px; 
-
-}
-     
     header {
-    margin-bottom: 30px;
-}
+      margin-bottom: 30px;
+    }
 
-.poem {
-    font-size: 14px;
-    background-color: #fff;
-    padding: 20px;
-    line-height: 2; 
-border-left: 3px solid #885df1; 
-box-shadow: 0px 20px 60px rgba(65, 50, 100, 0.08);
-}
+    h1 {
+      text-align: center;
+      font-weight: 800;
+      font-size: 36px;
+      line-height: 1.5;
+      color: #272044;
+    }
 
-footer { 
-    text-align: center; 
-    font-size: 13px; 
-    margin-top: 30px; 
-}
+    form {
+      padding: 30px; 
+      background-color: white;
+      box-shadow: 0px 20px 60px rgba(65, 50, 100, 0.08);
+      border-radius: 10px;
+      display: flex;
+      margin-bottom: 30px;
+    }
 
-</style>
+    .instruction { 
+      padding: 16px; 
+      border: 1px solid rgba(39, 33, 66, 0.5); 
+      width: 80%; 
+      font-size: 16px;
+      border-radius: 50px; 
+      line-height: 20px; 
+      color: #272044;
+    }
+
+    .submit-button { 
+      margin-left: 10px; 
+      background-color: #885df1;
+      color: white;
+      border: none; 
+      width: 150px;
+      font-size: 16px;
+      border-radius: 50px; 
+      padding: 14px 24px; 
+    }
+
+    .poem {
+      font-size: 14px;
+      background-color: #fff;
+      padding: 20px;
+      line-height: 2; 
+      border-left: 3px solid #885df1; 
+      box-shadow: 0px 20px 60px rgba(65, 50, 100, 0.08);
+    }
+
+    footer { 
+      text-align: center; 
+      font-size: 13px; 
+      margin-top: 30px; 
+    }
+  </style>
+</head>
+
 <body>
-    <div class="container">
+  <div class="container">
+
     <header>
-        <h1>Welcome to the AI French Poem Generator</h1>
+      <h1>Welcome to the AI French Poem Generator</h1>
     </header>
 
     <main>
-        <form>
-<input 
-  type="text"
-  placeholder="Enter the topic of the French poem"
-  autofocus
-  required
-  autocomplete="off"
-  class="instruction"
-/>
-<input type="submit" class="submit-button" /> 
+      <form id="poem-generator-form">
+        <input 
+          type="text"
+          placeholder="Enter the topic of the French poem"
+          autofocus
+          required
+          autocomplete="off"
+          class="instruction"
+        />
+        <input type="submit" class="submit-button" /> 
+      </form>
 
-    </form>
-    <div class="poem"> 
-La tombe dit à la rose
-<br /> 
-Des pleurs dont l'aube t'arrose
-    </div>
-</main>
-   <footer> 
-    <p>
-          This project was coded by
-          <a href="https://github.com/shannchristie" target="_blank" rel="noopener noreferrer">✨🌙 Shannen</a> and is
-          <a href="https://github.com/shannchristie/french-poem-generator" target="_blank" rel="noopener noreferrer">on GitHub</a> and
-          <a href="https://marvelous-maamoul-fb5a2f.netlify.app" target="_blank" rel="noopener noreferrer">hosted on Netlify</a>
-        </p>
-   </footer>
-   </div>
-</body>
-</html>
+      <div class="poem" id="poem"></div>
+    </main>
+
+    <script>
+      function generatePoem(event) {
+  event.preventDefault();
+
+  new Typewriter("#poem", {
+    strings: "La tombe dit à la rose",
+    autoStart: true,
+    delay: 1,
+    cursor: "",
+  });
+}
+
+let poemFormElement = document.querySelector("#poem-generator-form");
+poemFormElement.addEventListener("submit", generatePoem);
+    </script>
+
+    <footer> 
+      <p>
+        This project was coded by
+        <a href="https://github.com/shannchristie" target="_blank">✨🌙 Shannen</a> and is
+        <a href="https://github.com/shannchristie/french-poem-generator" target="_blank">on GitHub</a> and
+        <a href="https://marvelous-maamoul-fb5a2f.netlify.app" target="_blank">hosted on Netlify_
