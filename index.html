@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.jsdelivr.net/npm/typewriter-effect@2.18.0/dist/core.js"></script>
-
+<script src ="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
   <title>AI French Poem Generator</title>
 
   <style>
@@ -73,6 +73,10 @@
       box-shadow: 0px 20px 60px rgba(65, 50, 100, 0.08);
     }
 
+    .poem strong {
+        color: #885df1;
+    }
+
     footer { 
       text-align: center; 
       font-size: 13px; 
@@ -97,6 +101,7 @@
           required
           autocomplete="off"
           class="instruction"
+          id="user-instructions"
         />
         <input type="submit" class="submit-button" /> 
       </form>
@@ -105,19 +110,37 @@
     </main>
 
     <script>
-      function generatePoem(event) {
-  event.preventDefault();
-
+function displayPoem(response) {
+  console.log("poem generated");
   new Typewriter("#poem", {
-    strings: "La tombe dit à la rose",
+    strings: [response.data.answer],
     autoStart: true,
-    delay: 1,
+    delay: 50,
     cursor: "",
   });
 }
 
+function generatePoem(event) {
+  event.preventDefault();
+
+  let instructionsInput = document.querySelector("#user-instructions");
+  let apiKey = "ffddcebaf06e0to44a664648399a8013";
+
+  let prompt = `User instructions: Generate a french poem about ${instructionsInput.value}`;
+  let context = "You are a romantic poem expert and love to write short poems. Your mission is to generate a four line poem and separate the lines with a <br /> and sign off as SheCodes AI inside a <strong></strong> element. Make sure to follow the user instructions. ";
+
+  let apiURL = `https://api.shecodes.io/ai/v1/generate?prompt=${encodeURIComponent(prompt)}&context=${encodeURIComponent(context)}&key=${apiKey}`;
+
+  console.log("Generating Poem"); 
+  console.log(`Prompt: ${prompt}`); 
+  console.log(`Context: ${context}`);
+
+  axios.get(apiURL).then(displayPoem);
+}
+
 let poemFormElement = document.querySelector("#poem-generator-form");
 poemFormElement.addEventListener("submit", generatePoem);
+
     </script>
 
     <footer> 
