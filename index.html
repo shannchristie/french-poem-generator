@@ -34,13 +34,24 @@
       color: #272044;
     }
 
+.form-container { 
+    background-color: white;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 20px 60px rgba(65, 50, 100, 0.08);
+    padding: 30px; 
+}
+
     form {
-      padding: 30px; 
-      background-color: white;
-      box-shadow: 0px 20px 60px rgba(65, 50, 100, 0.08);
-      border-radius: 10px;
+
       display: flex;
-      margin-bottom: 30px;
+    }
+    .hint {
+       line-height: 1.5;
+       font-size: 12px; 
+       margin-top:5px;
+       opacity: 0.6; 
+       padding: 15px 20px; 
     }
 
     .instruction { 
@@ -73,9 +84,22 @@
       box-shadow: 0px 20px 60px rgba(65, 50, 100, 0.08);
     }
 
+    .hidden { 
+           display: none; 
+    }
     .poem strong {
         color: #885df1;
     }
+
+    .generating {
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+
 
     footer { 
       text-align: center; 
@@ -93,10 +117,11 @@
     </header>
 
     <main>
+        <div class ="form-container">
       <form id="poem-generator-form">
         <input 
           type="text"
-          placeholder="Enter the topic of the French poem"
+          placeholder="Enter the topic of a French poem"
           autofocus
           required
           autocomplete="off"
@@ -105,8 +130,10 @@
         />
         <input type="submit" class="submit-button" /> 
       </form>
+       <div class="hint"> i.e: Flowers, Paris or Cheese</div>
+      </div>
+      <div class="poem hidden" id="poem"></div>
 
-      <div class="poem" id="poem"></div>
     </main>
 
     <script>
@@ -125,11 +152,15 @@ function generatePoem(event) {
 
   let instructionsInput = document.querySelector("#user-instructions");
   let apiKey = "ffddcebaf06e0to44a664648399a8013";
-
   let prompt = `User instructions: Generate a french poem about ${instructionsInput.value}`;
   let context = "You are a romantic poem expert and love to write short poems. Your mission is to generate a four line poem and separate the lines with a <br /> and sign off as SheCodes AI inside a <strong></strong> element. Make sure to follow the user instructions. ";
-
   let apiURL = `https://api.shecodes.io/ai/v1/generate?prompt=${encodeURIComponent(prompt)}&context=${encodeURIComponent(context)}&key=${apiKey}`;
+
+ let poemElement = document.querySelector("#poem");
+
+poemElement.classList.remove("hidden");
+poemElement.innerHTML = `<div class="generating">⌛️ Generating the French poem about ${instructionsInput.value}</div>`;
+
 
   console.log("Generating Poem"); 
   console.log(`Prompt: ${prompt}`); 
@@ -148,4 +179,4 @@ poemFormElement.addEventListener("submit", generatePoem);
         This project was coded by
         <a href="https://github.com/shannchristie" target="_blank">✨🌙 Shannen</a> and is
         <a href="https://github.com/shannchristie/french-poem-generator" target="_blank">on GitHub</a> and
-        <a href="https://marvelous-maamoul-fb5a2f.netlify.app" target="_blank">hosted on Netlify_
+        <a href="https://marvelous-maamoul-fb5a2f.netlify.app" target="_blank">hosted on Netlify
